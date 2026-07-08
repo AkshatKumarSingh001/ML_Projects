@@ -13,6 +13,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW_DATA_PATH = os.path.join(PROJECT_ROOT, 'notebook', 'data', 'stud.csv')
@@ -59,4 +62,8 @@ class DataIngestion:
 
 if __name__ == "__main__":
     obj = DataIngestion() # Create an instance of the DataIngestion class.
-    obj.initiate_data_ingestion() # Call the initiate_data_ingestion method to start the data ingestion process.
+    train_data,test_data = obj.initiate_data_ingestion() # Call the initiate_data_ingestion method to perform data ingestion and get the paths to the training and testing data files.
+
+    data_transformation = DataTransformation() # Create an instance of the DataTransformation class.
+    data_transformation.initiate_data_transformation(train_data, test_data) # Call the initiate_data_transformation method to perform data transformation.
+
