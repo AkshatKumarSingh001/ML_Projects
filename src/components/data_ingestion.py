@@ -16,6 +16,8 @@ from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
+from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW_DATA_PATH = os.path.join(PROJECT_ROOT, 'notebook', 'data', 'stud.csv')
@@ -65,5 +67,9 @@ if __name__ == "__main__":
     train_data,test_data = obj.initiate_data_ingestion() # Call the initiate_data_ingestion method to perform data ingestion and get the paths to the training and testing data files.
 
     data_transformation = DataTransformation() # Create an instance of the DataTransformation class.
-    data_transformation.initiate_data_transformation(train_data, test_data) # Call the initiate_data_transformation method to perform data transformation.
+    # Unpack returned values. Some implementations return (train_arr, test_arr, <optional_path>).
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
 
+    model_trainer = ModelTrainer() # Create an instance of the ModelTrainer class.
+    print(model_trainer.initiate_model_trainer(train_arr, test_arr)) # Call the initiate_model_trainer method to train and evaluate models using the training and testing data arrays.
+    
